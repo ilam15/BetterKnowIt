@@ -29,7 +29,11 @@ const AnswerCard = ({ answer }) => {
     const handleDelete = async () => {
         if (!window.confirm("Delete this comment?")) return;
         try {
-            await axios.delete(`http://localhost:5000/api/answers/${answer._id || answer.answer_id}`);
+            const token = sessionStorage.getItem("token");
+            const config = {
+                headers: { Authorization: `Bearer ${token}` }
+            };
+            await axios.delete(`http://localhost:5000/api/answers/${answer._id || answer.answer_id}`, config);
             setIsDeleted(true);
             toast.success("Comment deleted");
         } catch (err) {
@@ -40,9 +44,13 @@ const AnswerCard = ({ answer }) => {
 
     const handleUpdate = async () => {
         try {
+            const token = sessionStorage.getItem("token");
+            const config = {
+                headers: { Authorization: `Bearer ${token}` }
+            };
             await axios.put(`http://localhost:5000/api/answers/${answer._id || answer.answer_id}`, {
                 answer_description: editValue
-            });
+            }, config);
             setIsEditing(false);
             toast.success("Comment updated");
             // Ideally parent should reload or we update local prop display, 

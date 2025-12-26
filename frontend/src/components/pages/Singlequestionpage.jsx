@@ -12,7 +12,11 @@ const SingleQuestionPage = () => {
         const fetchQuestion = async () => {
             setLoading(true);
             try {
-                const response = await axios.get(`http://localhost:5000/api/questions/${id}`);
+                const token = sessionStorage.getItem("token");
+                const config = {
+                    headers: { Authorization: `Bearer ${token}` }
+                };
+                const response = await axios.get(`http://localhost:5000/api/questions/${id}`, config);
                 setQuestion(response.data);
             } catch (error) {
                 console.error("Error fetching question:", error);

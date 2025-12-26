@@ -14,7 +14,11 @@ const AddPostPage = () => {
         // Fetch communities for the dropdown
         const fetchCommunities = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/api/communities');
+                const token = sessionStorage.getItem("token");
+                const config = {
+                    headers: { Authorization: `Bearer ${token}` }
+                };
+                const response = await axios.get('http://localhost:5000/api/communities', config);
                 setCommunities(response.data);
             } catch (error) {
                 console.error('Error fetching communities:', error);
@@ -54,7 +58,12 @@ const AddPostPage = () => {
                 share_count: 0
             };
 
-            await axios.post('http://localhost:5000/api/questions', newQuestion);
+            const token = sessionStorage.getItem("token");
+            const config = {
+                headers: { Authorization: `Bearer ${token}` }
+            };
+
+            await axios.post('http://localhost:5000/api/questions', newQuestion, config);
             toast.success('Question posted successfully!');
             navigate('/');
         } catch (error) {

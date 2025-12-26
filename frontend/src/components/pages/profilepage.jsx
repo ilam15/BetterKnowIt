@@ -27,7 +27,11 @@ const ProfilePage = () => {
             if (!userIdToFetch) return;
 
             try {
-                const response = await axios.get(`http://localhost:5000/api/questions?user_id=${userIdToFetch}`);
+                const token = sessionStorage.getItem("token");
+                const config = {
+                    headers: { Authorization: `Bearer ${token}` }
+                };
+                const response = await axios.get(`http://localhost:5000/api/questions?user_id=${userIdToFetch}`, config);
                 setUserPosts(response.data);
             } catch (error) {
                 console.error("Error fetching user posts:", error);
@@ -49,8 +53,12 @@ const ProfilePage = () => {
                     return;
                 }
 
+                const token = sessionStorage.getItem("token");
+                const config = {
+                    headers: { Authorization: `Bearer ${token}` }
+                };
                 // 1. Try to find existing profile
-                const response = await axios.get('http://localhost:5000/api/profiles');
+                const response = await axios.get('http://localhost:5000/api/profiles', config);
                 const userProfile = response.data.find(p => p.user_id && (p.user_id._id === userIdToFetch || p.user_id === userIdToFetch));
 
                 if (userProfile) {
@@ -83,20 +91,28 @@ const ProfilePage = () => {
 
         try {
             if (profile.temp) {
+                const token = sessionStorage.getItem("token");
+                const config = {
+                    headers: { Authorization: `Bearer ${token}` }
+                };
                 // Create new profile
                 const res = await axios.post('http://localhost:5000/api/profiles', {
                     user_id: currentUser._id,
                     bio: editBio,
                     location: "Earth" // Default
-                });
+                }, config);
                 // IMPORTANT: Backend returns unpopulated user_id (string), so we must manually attach current user info
                 setProfile({ ...res.data, user_id: currentUser });
                 toast.success("Profile created!");
             } else {
+                const token = sessionStorage.getItem("token");
+                const config = {
+                    headers: { Authorization: `Bearer ${token}` }
+                };
                 // Update existing
                 const res = await axios.put(`http://localhost:5000/api/profiles/${profile._id}`, {
                     bio: editBio
-                });
+                }, config);
                 // Keep the existing populated user_id object
                 setProfile({ ...res.data, user_id: profile.user_id });
                 toast.success("Profile updated!");

@@ -33,7 +33,12 @@ const CommunityPage = () => {
                 questions_count: 0
             };
 
-            await axios.post('http://localhost:5000/api/communities', newCommunity);
+            const token = sessionStorage.getItem("token");
+            const config = {
+                headers: { Authorization: `Bearer ${token}` }
+            };
+
+            await axios.post('http://localhost:5000/api/communities', newCommunity, config);
             toast.success('Community created successfully!');
             navigate('/');
         } catch (error) {

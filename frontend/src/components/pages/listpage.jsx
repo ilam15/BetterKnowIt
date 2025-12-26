@@ -14,7 +14,11 @@ const Listpage = () => {
       setLoading(true);
       setError(null);
       try {
-        const response = await axios.get(`http://localhost:5000/api/questions?sort=${sortBy}`);
+        const token = sessionStorage.getItem("token");
+        const config = {
+          headers: { Authorization: `Bearer ${token}` }
+        };
+        const response = await axios.get(`http://localhost:5000/api/questions?sort=${sortBy}`, config);
         await new Promise(resolve => setTimeout(resolve, 500));
         let data = response.data;
 

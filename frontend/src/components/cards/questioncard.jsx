@@ -14,9 +14,13 @@ const Questioncard = ({ question, defaultExpanded = false }) => {
 
   const handleUpdate = async () => {
     try {
+      const token = sessionStorage.getItem("token");
+      const config = {
+        headers: { Authorization: `Bearer ${token}` }
+      };
       await axios.put(`http://localhost:5000/api/questions/${question._id}`, {
         question: editValue
-      });
+      }, config);
       setIsEditing(false);
       toast.success("Post updated");
       window.location.reload();
@@ -53,7 +57,11 @@ const Questioncard = ({ question, defaultExpanded = false }) => {
     if (!window.confirm("Are you sure you want to delete this post?")) return;
 
     try {
-      await axios.delete(`http://localhost:5000/api/questions/${question._id}`);
+      const token = sessionStorage.getItem("token");
+      const config = {
+        headers: { Authorization: `Bearer ${token}` }
+      };
+      await axios.delete(`http://localhost:5000/api/questions/${question._id}`, config);
       toast.success("Question deleted");
       setIsDeleted(true);
     } catch (error) {
@@ -79,7 +87,11 @@ const Questioncard = ({ question, defaultExpanded = false }) => {
         user_id: user._id
       };
 
-      const response = await axios.post("http://localhost:5000/api/answers", newAnswer);
+      const token = sessionStorage.getItem("token");
+      const config = {
+        headers: { Authorization: `Bearer ${token}` }
+      };
+      const response = await axios.post("http://localhost:5000/api/answers", newAnswer, config);
 
       toast.success("Answer posted");
       setAnswerText("");
@@ -99,7 +111,11 @@ const Questioncard = ({ question, defaultExpanded = false }) => {
       return;
     }
     try {
-      await axios.put(`http://localhost:5000/api/questions/${question._id}/vote`, { type });
+      const token = sessionStorage.getItem("token");
+      const config = {
+        headers: { Authorization: `Bearer ${token}` }
+      };
+      await axios.put(`http://localhost:5000/api/questions/${question._id}/vote`, { type }, config);
       window.location.reload(); // Refresh to show new score
     } catch (error) {
       console.error("Error voting:", error);
