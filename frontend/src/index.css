@@ -1,0 +1,50 @@
+@import url('https://fonts.googleapis.com/css2?family=Blinker:wght@100;200;300;400;600;700;800;900&display=swap');
+
+body {
+    font-family: 'Blinker', sans-serif;
+}
+
+.scrollbar-none::-webkit-scrollbar {
+    display: none;           
+}
+
+/* Custom animations for smooth UI transitions */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-fadeIn {
+    animation: fadeIn 0.5s ease-out;
+}
+
+/* Smooth scroll behavior */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Custom scrollbar for main content */
+main::-webkit-scrollbar {
+    width: 8px;
+}
+
+main::-webkit-scrollbar-track {
+    background: #030303;
+}
+
+main::-webkit-scrollbar-thumb {
+    background: #343536;
+    border-radius: 4px;
+}
+
+main::-webkit-scrollbar-thumb:hover {
+    background: #4a4a4b;
+}
+
+@import "tailwindcss";
