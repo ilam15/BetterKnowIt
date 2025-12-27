@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { toast } from "react-toastify";
 
 const Login = () => {
@@ -9,20 +9,35 @@ const Login = () => {
   const password = useRef(null);
 
 
+  const [loading, setLoading] = useState(false);
+
   const handleLogin = async (e) => {
     e.preventDefault();
-    const { data } = await axios.post("https://betterknowit.onrender.com/api/users/login", {
-      username: username.current.value,
-      email: email.current.value,
-      password: password.current.value,
-    });
-    console.log("response", data)
-    toast.success("Login successful");
-    sessionStorage.setItem("token", data.token);
-    sessionStorage.setItem("user", JSON.stringify(data));
-    sessionStorage.setItem("isloggedin", true);
-    resetForm();
-    window.location.href = "/";
+
+    if (!username.current.value || !email.current.value || !password.current.value) {
+      toast.error("Please fill in all fields");
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const { data } = await axios.post("https://betterknowit.onrender.com/api/users/login", {
+        username: username.current.value,
+        email: email.current.value,
+        password: password.current.value,
+      });
+      console.log("response", data)
+      toast.success("Login successful");
+      sessionStorage.setItem("token", data.token);
+      sessionStorage.setItem("user", JSON.stringify(data));
+      sessionStorage.setItem("isloggedin", true);
+      resetForm();
+      window.location.href = "/";
+    } catch (error) {
+      console.error(error);
+      toast.error(error.response?.data?.message || "Login failed. Please check your credentials.");
+      setLoading(false);
+    }
   };
 
   const resetForm = () => {
@@ -76,9 +91,10 @@ const Login = () => {
           <button
             type="submit"
             onClick={handleLogin}
-            className="w-full bg-gradient-to-r from-orange-600 to-orange-500 text-white py-2 rounded-lg font-semibold hover:from-orange-500 hover:to-orange-400 transition-all duration-300 transform hover:scale-[1.02] shadow-lg shadow-orange-500/25"
+            disabled={loading}
+            className={`w-full bg-gradient-to-r from-orange-600 to-orange-500 text-white py-2 rounded-lg font-semibold hover:from-orange-500 hover:to-orange-400 transition-all duration-300 transform hover:scale-[1.02] shadow-lg shadow-orange-500/25 ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
           >
-            Login
+            {loading ? 'Logging in...' : 'Login'}
           </button>
         </div>
 

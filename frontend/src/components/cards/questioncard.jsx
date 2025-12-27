@@ -116,7 +116,7 @@ const Questioncard = ({ question, defaultExpanded = false }) => {
         headers: { Authorization: `Bearer ${token}` }
       };
       await axios.put(`https://betterknowit.onrender.com/api/questions/${question._id}/vote`, { type }, config);
-      window.location.reload(); // Refresh to show new score
+      window.location.reload(); 
     } catch (error) {
       console.error("Error voting:", error);
       toast.error("Failed to vote");
@@ -153,7 +153,6 @@ const Questioncard = ({ question, defaultExpanded = false }) => {
               <span>{formatDate(question.createdAt)}</span>
             </div>
 
-            {/* Edit/Delete Actions (kept for functionality) */}
             {user && (user._id === question.user_id?._id || user._id === question.user_id) && (
               <div className="flex gap-2">
                 <button

@@ -1,6 +1,6 @@
 import axios from "axios";
 import { toast } from "react-toastify";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
 const Register = () => {
 
@@ -8,23 +8,38 @@ const Register = () => {
     const username = useRef(null);
     const password = useRef(null);
 
+    const [loading, setLoading] = useState(false);
+
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const { data } = await axios.post("https://betterknowit.onrender.com/api/users/register", {
-            username: username.current.value,
-            email: email.current.value,
-            password: password.current.value,
-        });
-        console.log("response", data)
-        toast.success("Register successful");
-        sessionStorage.setItem("token", data.token);
-        sessionStorage.setItem("user", JSON.stringify(data));
-        sessionStorage.setItem("isloggedin", true);
 
-        resetForm();
-        setTimeout(() => {
-            window.location.href = "/";
-        }, 1500);
+        if (!username.current.value || !email.current.value || !password.current.value) {
+            toast.error("Please fill in all fields");
+            return;
+        }
+
+        setLoading(true);
+        try {
+            const { data } = await axios.post("https://betterknowit.onrender.com/api/users/register", {
+                username: username.current.value,
+                email: email.current.value,
+                password: password.current.value,
+            });
+            console.log("response", data)
+            toast.success("Register successful");
+            sessionStorage.setItem("token", data.token);
+            sessionStorage.setItem("user", JSON.stringify(data));
+            sessionStorage.setItem("isloggedin", true);
+
+            resetForm();
+            setTimeout(() => {
+                window.location.href = "/";
+            }, 1500);
+        } catch (error) {
+            console.error(error);
+            toast.error(error.response?.data?.message || "Registration failed. Please try again.");
+            setLoading(false);
+        }
     };
 
     const resetForm = () => {
@@ -80,9 +95,10 @@ const Register = () => {
                     <button
                         type="submit"
                         onClick={handleSubmit}
-                        className="w-full bg-gradient-to-r from-orange-600 to-orange-500 text-white py-2 rounded-lg font-semibold hover:from-orange-500 hover:to-orange-400 transition-all duration-300 transform hover:scale-[1.02] shadow-lg shadow-orange-500/25"
+                        className={`w-full bg-gradient-to-r from-orange-600 to-orange-500 text-white py-2 rounded-lg font-semibold hover:from-orange-500 hover:to-orange-400 transition-all duration-300 transform hover:scale-[1.02] shadow-lg shadow-orange-500/25 ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
+                        disabled={loading}
                     >
-                        Register
+                        {loading ? 'Creating Account...' : 'Register'}
                     </button>
                 </div>
                 <p className="text-sm text-center text-gray-400 mt-6">

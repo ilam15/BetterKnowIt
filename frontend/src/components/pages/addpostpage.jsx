@@ -11,7 +11,6 @@ const AddPostPage = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        // Fetch communities for the dropdown
         const fetchCommunities = async () => {
             try {
                 const token = sessionStorage.getItem("token");
@@ -50,7 +49,7 @@ const AddPostPage = () => {
 
         try {
             const newQuestion = {
-                question_id: Math.floor(Math.random() * 1000000), // Simple ID generation
+                question_id: Math.floor(Math.random() * 1000000), 
                 community_id: selectedCommunity,
                 user_id: user._id,
                 question: question,

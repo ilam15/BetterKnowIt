@@ -19,7 +19,6 @@ const ProfilePage = () => {
 
     useEffect(() => {
         const fetchUserPosts = async () => {
-            // We need a userId to fetch posts
             let userIdToFetch = id;
             if (!userIdToFetch && currentUser) {
                 userIdToFetch = currentUser._id;
@@ -57,7 +56,6 @@ const ProfilePage = () => {
                 const config = {
                     headers: { Authorization: `Bearer ${token}` }
                 };
-                // 1. Try to find existing profile
                 const response = await axios.get('https://betterknowit.onrender.com/api/profiles', config);
                 const userProfile = response.data.find(p => p.user_id && (p.user_id._id === userIdToFetch || p.user_id === userIdToFetch));
 
@@ -65,10 +63,9 @@ const ProfilePage = () => {
                     setProfile(userProfile);
                     setEditBio(userProfile.bio || "");
                 } else {
-                    // 2. If viewing own profile but no profile doc exists, create a temporary local one
                     if (currentUser && currentUser._id === userIdToFetch) {
                         setProfile({
-                            temp: true, // Marker to know we need to POST instead of PUT
+                            temp: true, 
                             user_id: currentUser,
                             bio: "Welcome to my profile!",
                             location: "Unknown"
@@ -84,7 +81,7 @@ const ProfilePage = () => {
             }
         };
         fetchProfile();
-    }, [id, currentUser?._id]); // Add currentUser dependency
+    }, [id, currentUser?._id]);
 
     const handleSaveProfile = async () => {
         if (!currentUser) return;
@@ -95,13 +92,11 @@ const ProfilePage = () => {
                 const config = {
                     headers: { Authorization: `Bearer ${token}` }
                 };
-                // Create new profile
                 const res = await axios.post('https://betterknowit.onrender.com/api/profiles', {
                     user_id: currentUser._id,
                     bio: editBio,
-                    location: "Earth" // Default
+                    location: "Earth"
                 }, config);
-                // IMPORTANT: Backend returns unpopulated user_id (string), so we must manually attach current user info
                 setProfile({ ...res.data, user_id: currentUser });
                 toast.success("Profile created!");
             } else {
@@ -109,11 +104,9 @@ const ProfilePage = () => {
                 const config = {
                     headers: { Authorization: `Bearer ${token}` }
                 };
-                // Update existing
                 const res = await axios.put(`https://betterknowit.onrender.com/api/profiles/${profile._id}`, {
                     bio: editBio
                 }, config);
-                // Keep the existing populated user_id object
                 setProfile({ ...res.data, user_id: profile.user_id });
                 toast.success("Profile updated!");
             }

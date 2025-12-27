@@ -33,7 +33,6 @@ const SingleQuestionPage = () => {
 
     return (
         <main className="bg-[#030303] min-h-screen pt-4 px-4 pb-20">
-            {/* Back Button */}
             <div className="mb-4">
                 <Link to="/" className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors text-sm font-semibold">
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
