@@ -19,6 +19,11 @@ const Login = () => {
       return;
     }
 
+    if (!email.current.value.endsWith("@gmail.com")) {
+      toast.error("Please enter a valid Gmail address (@gmail.com)");
+      return;
+    }
+
     setLoading(true);
     try {
       const { data } = await axios.post("https://betterknowit.onrender.com/api/users/login", {
