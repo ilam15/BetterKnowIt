@@ -18,7 +18,7 @@ const Questioncard = ({ question, defaultExpanded = false }) => {
       const config = {
         headers: { Authorization: `Bearer ${token}` }
       };
-      await axios.put(`http://localhost:5000/api/questions/${question._id}`, {
+      await axios.put(`https://betterknowit.onrender.com/api/questions/${question._id}`, {
         question: editValue
       }, config);
       setIsEditing(false);
@@ -61,7 +61,7 @@ const Questioncard = ({ question, defaultExpanded = false }) => {
       const config = {
         headers: { Authorization: `Bearer ${token}` }
       };
-      await axios.delete(`http://localhost:5000/api/questions/${question._id}`, config);
+      await axios.delete(`https://betterknowit.onrender.com/api/questions/${question._id}`, config);
       toast.success("Question deleted");
       setIsDeleted(true);
     } catch (error) {
@@ -91,7 +91,7 @@ const Questioncard = ({ question, defaultExpanded = false }) => {
       const config = {
         headers: { Authorization: `Bearer ${token}` }
       };
-      const response = await axios.post("http://localhost:5000/api/answers", newAnswer, config);
+      const response = await axios.post("https://betterknowit.onrender.com/api/answers", newAnswer, config);
 
       toast.success("Answer posted");
       setAnswerText("");
@@ -115,7 +115,7 @@ const Questioncard = ({ question, defaultExpanded = false }) => {
       const config = {
         headers: { Authorization: `Bearer ${token}` }
       };
-      await axios.put(`http://localhost:5000/api/questions/${question._id}/vote`, { type }, config);
+      await axios.put(`https://betterknowit.onrender.com/api/questions/${question._id}/vote`, { type }, config);
       window.location.reload(); // Refresh to show new score
     } catch (error) {
       console.error("Error voting:", error);

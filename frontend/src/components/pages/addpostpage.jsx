@@ -18,7 +18,7 @@ const AddPostPage = () => {
                 const config = {
                     headers: { Authorization: `Bearer ${token}` }
                 };
-                const response = await axios.get('http://localhost:5000/api/communities', config);
+                const response = await axios.get('https://betterknowit.onrender.com/api/communities', config);
                 setCommunities(response.data);
             } catch (error) {
                 console.error('Error fetching communities:', error);
@@ -63,7 +63,7 @@ const AddPostPage = () => {
                 headers: { Authorization: `Bearer ${token}` }
             };
 
-            await axios.post('http://localhost:5000/api/questions', newQuestion, config);
+            await axios.post('https://betterknowit.onrender.com/api/questions', newQuestion, config);
             toast.success('Question posted successfully!');
             navigate('/');
         } catch (error) {

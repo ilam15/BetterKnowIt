@@ -38,7 +38,7 @@ const CommunityPage = () => {
                 headers: { Authorization: `Bearer ${token}` }
             };
 
-            await axios.post('http://localhost:5000/api/communities', newCommunity, config);
+            await axios.post('https://betterknowit.onrender.com/api/communities', newCommunity, config);
             toast.success('Community created successfully!');
             navigate('/');
         } catch (error) {

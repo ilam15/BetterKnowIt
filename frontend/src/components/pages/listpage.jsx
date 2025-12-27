@@ -18,7 +18,7 @@ const Listpage = () => {
         const config = {
           headers: { Authorization: `Bearer ${token}` }
         };
-        const response = await axios.get(`http://localhost:5000/api/questions?sort=${sortBy}`, config);
+        const response = await axios.get(`https://betterknowit.onrender.com/api/questions?sort=${sortBy}`, config);
         await new Promise(resolve => setTimeout(resolve, 500));
         let data = response.data;
 

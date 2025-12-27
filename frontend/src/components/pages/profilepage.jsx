@@ -31,7 +31,7 @@ const ProfilePage = () => {
                 const config = {
                     headers: { Authorization: `Bearer ${token}` }
                 };
-                const response = await axios.get(`http://localhost:5000/api/questions?user_id=${userIdToFetch}`, config);
+                const response = await axios.get(`https://betterknowit.onrender.com/api/questions?user_id=${userIdToFetch}`, config);
                 setUserPosts(response.data);
             } catch (error) {
                 console.error("Error fetching user posts:", error);
@@ -58,7 +58,7 @@ const ProfilePage = () => {
                     headers: { Authorization: `Bearer ${token}` }
                 };
                 // 1. Try to find existing profile
-                const response = await axios.get('http://localhost:5000/api/profiles', config);
+                const response = await axios.get('https://betterknowit.onrender.com/api/profiles', config);
                 const userProfile = response.data.find(p => p.user_id && (p.user_id._id === userIdToFetch || p.user_id === userIdToFetch));
 
                 if (userProfile) {
@@ -96,7 +96,7 @@ const ProfilePage = () => {
                     headers: { Authorization: `Bearer ${token}` }
                 };
                 // Create new profile
-                const res = await axios.post('http://localhost:5000/api/profiles', {
+                const res = await axios.post('https://betterknowit.onrender.com/api/profiles', {
                     user_id: currentUser._id,
                     bio: editBio,
                     location: "Earth" // Default
@@ -110,7 +110,7 @@ const ProfilePage = () => {
                     headers: { Authorization: `Bearer ${token}` }
                 };
                 // Update existing
-                const res = await axios.put(`http://localhost:5000/api/profiles/${profile._id}`, {
+                const res = await axios.put(`https://betterknowit.onrender.com/api/profiles/${profile._id}`, {
                     bio: editBio
                 }, config);
                 // Keep the existing populated user_id object

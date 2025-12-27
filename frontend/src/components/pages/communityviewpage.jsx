@@ -18,11 +18,11 @@ const CommunityViewPage = () => {
                     headers: { Authorization: `Bearer ${token}` }
                 };
                 // Fetch community details
-                const comRes = await axios.get(`http://localhost:5000/api/communities/${id}`, config);
+                const comRes = await axios.get(`https://betterknowit.onrender.com/api/communities/${id}`, config);
                 setCommunity(comRes.data);
 
                 // Fetch questions for this community
-                const qRes = await axios.get(`http://localhost:5000/api/questions?community_id=${id}`, config);
+                const qRes = await axios.get(`https://betterknowit.onrender.com/api/questions?community_id=${id}`, config);
                 setQuestions(qRes.data);
             } catch (error) {
                 console.error("Error fetching community data:", error);

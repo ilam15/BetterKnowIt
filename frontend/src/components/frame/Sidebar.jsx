@@ -42,7 +42,7 @@ const Sidebar = () => {
   useEffect(() => {
     const fetchCommunities = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/communities');
+        const response = await axios.get('https://betterknowit.onrender.com/api/communities');
         const data = await response.data;
         setCommunities(data);
       } catch (error) {

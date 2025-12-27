@@ -33,7 +33,7 @@ const AnswerCard = ({ answer }) => {
             const config = {
                 headers: { Authorization: `Bearer ${token}` }
             };
-            await axios.delete(`http://localhost:5000/api/answers/${answer._id || answer.answer_id}`, config);
+            await axios.delete(`https://betterknowit.onrender.com/api/answers/${answer._id || answer.answer_id}`, config);
             setIsDeleted(true);
             toast.success("Comment deleted");
         } catch (err) {
@@ -48,7 +48,7 @@ const AnswerCard = ({ answer }) => {
             const config = {
                 headers: { Authorization: `Bearer ${token}` }
             };
-            await axios.put(`http://localhost:5000/api/answers/${answer._id || answer.answer_id}`, {
+            await axios.put(`https://betterknowit.onrender.com/api/answers/${answer._id || answer.answer_id}`, {
                 answer_description: editValue
             }, config);
             setIsEditing(false);

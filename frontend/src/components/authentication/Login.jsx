@@ -11,7 +11,7 @@ const Login = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    const { data } = await axios.post("http://localhost:5000/api/users/login", {
+    const { data } = await axios.post("https://betterknowit.onrender.com/api/users/login", {
       username: username.current.value,
       email: email.current.value,
       password: password.current.value,

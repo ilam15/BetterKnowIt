@@ -16,7 +16,7 @@ const SingleQuestionPage = () => {
                 const config = {
                     headers: { Authorization: `Bearer ${token}` }
                 };
-                const response = await axios.get(`http://localhost:5000/api/questions/${id}`, config);
+                const response = await axios.get(`https://betterknowit.onrender.com/api/questions/${id}`, config);
                 setQuestion(response.data);
             } catch (error) {
                 console.error("Error fetching question:", error);
